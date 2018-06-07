@@ -253,7 +253,7 @@ if [ ! -d "$configDir" ]; then
 
 ############   Debugging   ############
   if [ $DEBUG == 'YES' ]; then
-    printf "%b\n\nould not find the config directory, created one at"
+    printf "%b\n\nCould not find the config directory, created one at"
     printf %s "$configDir"
     printf "%b\n\n"
   fi
@@ -311,7 +311,7 @@ if [ -f "$configDir/applications.conf" ]; then
 
 ############   Debugging   ############
   if [ $DEBUG == 'YES' ]; then
-    printf "%b\n\nReading applications into Applications Array\n\n"
+    printf "%b\nReading applications into Applications Array"
   fi
 ############   Debugging   ############
 
@@ -320,10 +320,10 @@ else
 
 ############   Debugging   ############
   if [ $DEBUG == 'YES' ]; then
-    printf "%b\n\nCould not find an applications config file,
+    printf "%b\nCould not find an applications config file,
 \\\\\\created a new one at"
     printf %s "$configDir"
-    printf "%b/applications.conf\n\n"
+    printf "%b/applications.conf"
   fi
 ############   Debugging   ############
 
@@ -338,7 +338,7 @@ if [ -f "$configDir/gitRepositories.conf" ]; then
 
 ############   Debugging   ############
   if [ $DEBUG == 'YES' ]; then
-    printf "%b\n\nReading git repositories into Git Repository Array"
+    printf "%b\nReading git repositories into Git Repository Array"
   fi
   ############   Debugging   ############
 
@@ -347,9 +347,9 @@ else
 
 ############   Debugging   ############
   if [ $DEBUG == 'YES' ]; then
-    printf "%b\n\nCould not find a git config file, created a new one at "
+    printf "%b\nCould not find a git config file, created a new one at "
     printf %s "$configDir"
-    printf "%b/themes.conf\n\n"
+    printf "%b/themes.conf"
   fi
 ############   Debugging   ############
 
@@ -366,7 +366,7 @@ if [ -f "$configDir/customGitInstallation.conf" ]; then
 
 ############   Debugging   ############
   if [ $DEBUG == 'YES' ]; then
-    printf "%b\n\nReading custom commands into Git Installations Array\n\n"
+    printf "%b\nReading custom commands into Git Installations Array"
   fi
 ############   Debugging   ############
 
@@ -375,9 +375,9 @@ else
 
 ############   Debugging   ############
   if [ $DEBUG == 'YES' ]; then
-    printf "%b\n\nCould not find config config file, created a new one at"
+    printf "%b\nCould not find config config file, created a new one at"
     printf %s "$configDir"
-    printf "%b/themes.conf\n\n"
+    printf "%b/themes.conf"
   fi
 ############   Debugging   ############
 
@@ -393,7 +393,7 @@ if [ -f "$configDir/background.conf" ]; then
 
 ############   Debugging   ############
   if [ $DEBUG == 'YES' ]; then
-    printf "%b\n\nReading backgrounds into Backgrounds Array"
+    printf "%b\nReading backgrounds into Backgrounds Array"
   fi
 ############   Debugging   ############
 
@@ -402,9 +402,9 @@ else
 
 ############   Debugging   ############
   if [ $DEBUG == 'YES' ]; then
-    printf "%b\n\nCould not find background config file, created a new one at "
+    printf "%b\nCould not find background config file, created a new one at "
     printf %s "$configDir"
-    printf "%b/background.conf\n\n"
+    printf "%b/background.conf"
   fi
 ############   Debugging   ############
 
@@ -420,7 +420,7 @@ if [ -f "$configDir/themes.conf" ]; then
 
 ############   Debugging   ############
   if [ $DEBUG == 'YES' ]; then
-    printf "%b\n\nReading themes into Themes Array"
+    printf "%b\nReading themes into Themes Array"
   fi
 ############   Debugging   ############
 
@@ -429,9 +429,9 @@ else
 
 ############   Debugging   ############
   if [ $DEBUG == 'YES' ]; then
-    printf "%b\n\nCould not find config config file, created a new one at "
+    printf "%b\nCould not find config config file, created a new one at "
     printf %s "$configDir"
-    printf "%b/themes.conf\n\n"
+    printf "%b/themes.conf"
   fi
 ############   Debugging   ############
 
@@ -447,7 +447,7 @@ if [ -f "$configDir/addons.conf" ]; then
 
 ############   Debugging   ############
   if [ $DEBUG == 'YES' ]; then
-    printf "%b\n\nReading addons into Addons Array"
+    printf "%b\nReading addons into Addons Array\n\n\n"
   fi
 ############   Debugging   ############
 
@@ -456,9 +456,9 @@ else
 
 ############   Debugging   ############
   if [ $DEBUG == 'YES' ]; then
-    printf "%b\n\nCould not find addons config file, created a new one at "
+    printf "%b\nCould not find addons config file, created a new one at "
     printf %s "$configDir"
-    printf "%b/addons.conf\n\n"
+    printf "%b/addons.conf\n\n\n"
   fi
 ############   Debugging   ############
 
@@ -474,9 +474,8 @@ applications() {
 
 ############   Debugging   ############
     if [ $DEBUG == 'YES' ]; then
-      printf "%b\n\nInstalling "
+      printf "%b\nInstalling "
       printf %s "$i"
-      printf "%b\n\n"
     fi
 ############   Debugging   ############
     apt-get install -y "$i"
@@ -491,9 +490,8 @@ git() {
 
 ############   Debugging   ############
     if [ $DEBUG == 'YES' ]; then
-      printf "%b\n\nCloning git repository "
+      printf "%b\nCloning git repository "
       printf %s "$i"
-      printf "%b\n\n"
     fi
 ############   Debugging   ############
     exec git clone "$i"
@@ -508,9 +506,8 @@ customGitInstallation() {
 
 ############   Debugging   ############
     if [ $DEBUG == 'YES' ]; then
-      printf "%b\n\nRunning custom command "
+      printf "%b\nRunning custom command "
       printf %s "$i"
-      printf "%b\n\n"
     fi
 ############   Debugging   ############
     "$i"
@@ -525,9 +522,8 @@ backgrounds() {
 
 ############   Debugging   ############
     if [ $DEBUG == 'YES' ]; then
-      printf "%b\n\nDownloading background from "
+      printf "%b\nDownloading background from "
       printf %s "$i"
-      printf "%b\n\n"
     fi
 ############   Debugging   ############
     wget --content-disposition "$i"
@@ -544,9 +540,8 @@ themes() {
 
 ############   Debugging   ############
     if [ $DEBUG == 'YES' ]; then
-      printf "%b\n\nDownloading theme from "
+      printf "%b\nDownloading theme from "
       printf %s "$i"
-      printf "%b\n\n"
     fi
 ############   Debugging   ############
     exec wget -i --content-disposition "$i"
@@ -561,9 +556,8 @@ addons() {
 
 ############   Debugging   ############
       if [ $DEBUG == 'YES' ]; then
-      printf "%b\n\nDownloading addon from "
+      printf "%b\nDownloading addon from "
       printf %s "$i"
-      printf "%b\n\n"
     fi
 ############   Debugging   ############
     exec wget -i --content-disposition "$i"
