@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Version: 0.0.1 ?
+# Version: 0.0.1.5 ?
 # by Knaku
 
 # Custom install and customization script
@@ -8,8 +8,9 @@
 ######################### VARIABLES #########################
 
 gitDir="/tmp"
-scriptDir="$(dirname "$(readlink -f "$0")")"
-VAR="FALSE"
+scriptDir="$(dirname "$(readlink -f "$0")")"      # directort of script
+VAR="FALSE"                       # used to check if variabes is used,
+                                    # if not display short help message
 
 ######################### ARGUEMENTS #########################
 
@@ -44,6 +45,11 @@ case $key in                      # options
     printf "%b\n\nHELP MESSAGE HERE\n\n"
     exit 0
     ;;
+    --debug)                    # turn on debuging
+    DEBUG=YES
+    VAR="true"
+    shift # past argument
+    ;;
     --default)                    # set to script-directorydownload/install
     DEFAULT=YES                   # folder at same path as the script
     VAR="true"
@@ -57,12 +63,32 @@ esac
 done
 set -- "${POSITIONAL[@]}" # restore positional parameters
 
+############   Debugging   ############
+if [ $DEBUG == 'YES' ]; then
+  printf "%b\n\nScript directory is set to "
+  printf %s "$scriptDir"
+  printf "%b, and options have been processed\n\n"
+fi
+############   Debugging   ############
+
 ##################### ARGUEMNT CHECKING #####################
 
 if [ "$DIRECTORY" != '' ]; then
+############   Debugging   ############
+  if [ $DEBUG == 'YES' ]; then
+    printf "%b\n\nCustom directory option set\n\n"
+  fi
+############   Debugging   ############
+
   true="false"
   while [ "$true" = "false" ]; do
     if [ ! -d "$DIRECTORY" ]; then
+
+############   Debugging   ############
+      if [ $DEBUG == 'YES' ]; then
+        printf "%b\n\nCustom directory not found, asking for other solutionsn\n"
+      fi
+############   Debugging   ############
       printf "%b\n\nSupplied directory; $DIRECTORY does not exist. \
         \n\n\t1)Enter path of existing directory 		   \
         \n\t2)Use the (d) the same path as the script 		   \
@@ -86,8 +112,17 @@ if [ "$DIRECTORY" != '' ]; then
       true="true"
     fi
   done
-  scriptDir=$DIRECTORY
+
+  setDir=$DIRECTORY
   VAR="true"
+
+############   Debugging   ############
+  if [ $DEBUG == 'YES' ]; then
+    printf "%b\n\nCustom directory option enabled, directory setDir to"
+    printf %s "$setDir"
+    printf "%b\n\n"
+  fi
+############   Debugging   ############
 
 elif [ $VAR != "true" ]; then
   scriptDir="$(dirname "$(readlink -f "$0")")"
@@ -98,56 +133,171 @@ elif [ $VAR != "true" ]; then
     \n\nTo abort press Ctrl+C"
   sleep 5
   clear
+
+else
+  printf "\nNo directory set, choosing directory at script root\n"
+  setDir=$scriptDir
 fi
 
 if [ "$DEFAULT" == "YES" ]; then
-  setDir="$scriptDir"
+  setDir=$scriptDir
+
+############   Debugging   ############
+  if [ $DEBUG == 'YES' ]; then
+    printf "%b\n\nDefault option enabled, directory setDir to"
+    printf %s "$setDir"
+    printf "%b\n\n"
+  fi
+############   Debugging   ############
+
 fi
 
 if [ "$home" = "YES" ]; then
   setDir=$HOME
+
+############   Debugging   ############
+  if [ $DEBUG == 'YES' ]; then
+    printf "%b\n\nHome folder option enabled, setting directory to"
+    printf %s "$setDir"
+    printf "%b\n\n"
+  fi
+############   Debugging   ############
+
 fi
 
 if [ "$GIT" = "YES" ]; then
   gitDir=$scriptDir/"git"
+
+############   Debugging   ############
+  if [ $DEBUG == 'YES' ]; then
+    printf "%b\n\nGit in directory option enabled, directory setDir to"
+    printf %s "$gitDir"
+    printf "%b\n\n"
+  fi
+############   Debugging   ############
+
 fi
 
 if [ "$GIT" = "HOME" ]; then
   gitDir=$HOME/"git"
+
+############   Debugging   ############
+  if [ $DEBUG == 'YES' ]; then
+    printf "%b\n\nGit in home folder option enabled, directory setDir to"
+    printf %s "$gitDir"
+    printf "%b\n\n"
+  fi
+############   Debugging   ############
+
 fi
 
 ######################### DIRECTORIES #########################
 
   # check if directories exists, if not, create them
 
-dir=$setDir/"installeroo"
+dir=$setDir/"Installeroo"
 configDir=$scriptDir/"config"
 downloadsDir=$dir/"downloads"
 backgroundDir=$dir/"backgrounds"
 themesDir=$dir/"themes"
 
+
+
+############   Debugging   ############
+if [ $DEBUG == 'YES' ]; then
+  printf "%b\n\nDirectories are: \n\t"
+  printf %s "$setDir"
+  printf "%b\n\t"
+  printf %s "$dir"
+  printf "%b\n\t"
+  printf %s "$configDir"
+  printf "%b\n\t"
+  printf %s "$downloadsDir"
+  printf "%b\n\t"
+  printf %s "$backgroundDir"
+  printf "%b\n\t"
+  printf %s "$backgroundDir"
+  printf "%b\n\n"
+fi
+############   Debugging   ############
+
+
 if [ ! -d "$dir" ]; then
   mkdir "$dir"
+
+############   Debugging   ############
+if [ $DEBUG == 'YES' ]; then
+    printf "%b\n\nCould not find the main directory, created one at"
+    printf %s "$dir"
+    printf "%b\n\n"
+  fi
+############   Debugging   ############
+
 fi
 
 if [ ! -d "$gitDir" ]; then
   mkdir "$gitDir"
+
+############   Debugging   ############
+  if [ $DEBUG == 'YES' ]; then
+    printf "%b\n\nCould not find the git directory, created one at"
+    printf %s "$gitDir"
+    printf "%b\n\n"
+  fi
+############   Debugging   ############
+
 fi
 
 if [ ! -d "$configDir" ]; then
   mkdir "$configDir"
+
+############   Debugging   ############
+  if [ $DEBUG == 'YES' ]; then
+    printf "%b\n\nould not find the config directory, created one at"
+    printf %s "$configDir"
+    printf "%b\n\n"
+  fi
+############   Debugging   ############
+
 fi
 
 if [ ! -d "$backgroundDir" ]; then
   mkdir "$backgroundDir"
+
+############   Debugging   ############
+  if [ $DEBUG == 'YES' ]; then
+    printf "%b\n\nCould not find the background directory, created one at"
+    printf %s "$backgroundDir"
+    printf "%b\n\n"
+  fi
+############   Debugging   ############
+
 fi
 
 if [ ! -d "$themesDir" ]; then
   mkdir "$themesDir"
+
+############   Debugging   ############
+  if [ $DEBUG == 'YES' ]; then
+    printf "%b\n\nCould not find the themes directory, created one at "
+    printf %s "$backgroundDir"
+    printf "%b\n\n"
+  fi
+############   Debugging   ############
+
 fi
 
 if [ ! -d "$downloadsDir" ]; then
   mkdir "$downloadsDir"
+
+############   Debugging   ############
+  if [ $DEBUG == 'YES' ]; then
+    printf "%b\n\nCould not find the download directory, created one at"
+    printf %s "$downloadsDir"
+    printf "%b\n\n"
+  fi
+############   Debugging   ############
+
 fi
 
 ######################### READ FROM FILE #########################
@@ -158,8 +308,25 @@ if [ -f "$configDir/applications.conf" ]; then
   applicationsArray="$configDir/applications.conf"
   applicationsArray=$(grep -vE '^(\s*$|#)' "$applicationsArray")
   readarray applicationsArray <<< "$applicationsArray"
+
+############   Debugging   ############
+  if [ $DEBUG == 'YES' ]; then
+    printf "%b\n\nReading applications into Applications Array\n\n"
+  fi
+############   Debugging   ############
+
 else
   touch "$configDir/applications.conf"
+
+############   Debugging   ############
+  if [ $DEBUG == 'YES' ]; then
+    printf "%b\n\nCould not find an applications config file,
+\\\\\\created a new one at"
+    printf %s "$configDir"
+    printf "%b/applications.conf\n\n"
+  fi
+############   Debugging   ############
+
 fi
 
 # git repos
@@ -168,30 +335,79 @@ if [ -f "$configDir/gitRepositories.conf" ]; then
   gitRepoConf="$configDir/gitRepositories.conf"
   gitReposArray=$(grep -vE '^(\s*$|#)' -- "$gitRepoConf")
   readarray gitReposArray <<< "$gitReposArray"
+
+############   Debugging   ############
+  if [ $DEBUG == 'YES' ]; then
+    printf "%b\n\nReading git repositories into Git Repository Array"
+  fi
+  ############   Debugging   ############
+
 else
   touch "$configDir/gitRepositories.conf"
+
+############   Debugging   ############
+  if [ $DEBUG == 'YES' ]; then
+    printf "%b\n\nCould not find a git config file, created a new one at "
+    printf %s "$configDir"
+    printf "%b/themes.conf\n\n"
+  fi
+############   Debugging   ############
+
 fi
 
 # Custom Applications
   # read from file, if not exists, create the file user can add custom
   # applications installitions, e.g from downloaded gits
-if [ -f "$configDir/customApplications.conf" ]; then
-  customApplicationsArray="$configDir/customApplications.conf"
-  customApplicationsArray=$(grep -vE '^(\s*$|#)' "$customApplicationsArray")
-  readarray customApplicationsArray <<< "$customApplicationsArray"
+if [ -f "$configDir/customGitInstallation.conf" ]; then
+  customGitInstallationArray="$configDir/customGitInstallation.conf"
+  customGitInstallationArray=$(grep -vE '^(\s*$|#)' \
+    "$customGitInstallationArray")
+  readarray customGitInstallationArray <<< "$customGitInstallationArray"
+
+############   Debugging   ############
+  if [ $DEBUG == 'YES' ]; then
+    printf "%b\n\nReading custom commands into Git Installations Array\n\n"
+  fi
+############   Debugging   ############
+
 else
-  touch "$configDir/customApplications.conf"
+  touch "$configDir/customGitInstallation.conf"
+
+############   Debugging   ############
+  if [ $DEBUG == 'YES' ]; then
+    printf "%b\n\nCould not find config config file, created a new one at"
+    printf %s "$configDir"
+    printf "%b/themes.conf\n\n"
+  fi
+############   Debugging   ############
+
 fi
 
 # Backgrounds
   # read from file, if not exists, create the file so
   # user can add backgrounds to download
-if [ -f "$configDir/themes.conf" ]; then
+if [ -f "$configDir/background.conf" ]; then
   backgroundsArray="$configDir/background.conf"
   backgroundsArray=$(grep -vE '^(\s*$|#)' "$backgroundsArray")
-  readarray backgroundArray <<< "$backgroundArray"
+  readarray backgroundsArray <<< "$backgroundsArray"
+
+############   Debugging   ############
+  if [ $DEBUG == 'YES' ]; then
+    printf "%b\n\nReading backgrounds into Backgrounds Array"
+  fi
+############   Debugging   ############
+
 else
   touch "$configDir/background.conf"
+
+############   Debugging   ############
+  if [ $DEBUG == 'YES' ]; then
+    printf "%b\n\nCould not find background config file, created a new one at "
+    printf %s "$configDir"
+    printf "%b/background.conf\n\n"
+  fi
+############   Debugging   ############
+
 fi
 
 # Themes
@@ -201,8 +417,24 @@ if [ -f "$configDir/themes.conf" ]; then
   themesArray="$configDir/themes.conf"
   themesArray=$(grep -vE '^(\s*$|#)' "$themesArray")
   readarray themesArray <<< "$themesArray"
+
+############   Debugging   ############
+  if [ $DEBUG == 'YES' ]; then
+    printf "%b\n\nReading themes into Themes Array"
+  fi
+############   Debugging   ############
+
 else
   touch "$configDir/themes.conf"
+
+############   Debugging   ############
+  if [ $DEBUG == 'YES' ]; then
+    printf "%b\n\nCould not find config config file, created a new one at "
+    printf %s "$configDir"
+    printf "%b/themes.conf\n\n"
+  fi
+############   Debugging   ############
+
 fi
 
 # addons
@@ -212,8 +444,24 @@ if [ -f "$configDir/addons.conf" ]; then
   addonsArray="$configDir/addons.conf"
   addonsArray=$(grep -vE '^(\s*$|#)' "$addonsArray")
   readarray addonsArray <<< "$addonsArray"
+
+############   Debugging   ############
+  if [ $DEBUG == 'YES' ]; then
+    printf "%b\n\nReading addons into Addons Array"
+  fi
+############   Debugging   ############
+
 else
   touch "$configDir/addons.conf"
+
+############   Debugging   ############
+  if [ $DEBUG == 'YES' ]; then
+    printf "%b\n\nCould not find addons config file, created a new one at "
+    printf %s "$configDir"
+    printf "%b/addons.conf\n\n"
+  fi
+############   Debugging   ############
+
 fi
 
 
@@ -221,10 +469,18 @@ fi
 
 # Install applications
 applications() {
-  cd "$setDir" || 
+  cd "$setDir" ||
   for i in "${!applicationsArray[@]}"; do
-    echo "$i"
+
+############   Debugging   ############
+    if [ $DEBUG == 'YES' ]; then
+      printf "%b\n\nInstalling "
+      printf %s "$i"
+      printf "%b\n\n"
+    fi
+############   Debugging   ############
     apt-get install -y "$i"
+
   done
 }
 
@@ -232,17 +488,33 @@ applications() {
 git() {
   cd "$gitDir" || printf %s "Could not enter $gitDir" exit 1
   for i in "${gitReposArray[@]}"; do
-    echo "$i"
+
+############   Debugging   ############
+    if [ $DEBUG == 'YES' ]; then
+      printf "%b\n\nCloning git repository "
+      printf %s "$i"
+      printf "%b\n\n"
+    fi
+############   Debugging   ############
     exec git clone "$i"
 
   done
 }
 
 # Custom Applications
-customApplications() {
+customGitInstallation() {
   cd "$gitDir" || printf %s "Could not enter $gitDir" exit 1
-  for i in "${customApplicationsArray[@]}"; do
+  for i in "${customGitInstallationArray[@]}"; do
+
+############   Debugging   ############
+    if [ $DEBUG == 'YES' ]; then
+      printf "%b\n\nRunning custom command "
+      printf %s "$i"
+      printf "%b\n\n"
+    fi
+############   Debugging   ############
     "$i"
+
   done
 }
 
@@ -250,13 +522,17 @@ customApplications() {
 backgrounds() {
   cd "$backgroundDir" || printf %s "Could not enter $backgroundDir" exit 1
   for i in "${backgroundsArray[@]}"; do
-    echo "$i"
-    echo " "
-    echo " "
+
+############   Debugging   ############
+    if [ $DEBUG == 'YES' ]; then
+      printf "%b\n\nDownloading background from "
+      printf %s "$i"
+      printf "%b\n\n"
+    fi
+############   Debugging   ############
     wget --content-disposition "$i"
     sleep 1
-    echo " "
-    echo " "
+
   done
   wait
 }
@@ -265,8 +541,16 @@ backgrounds() {
 themes() {
   cd "$themesDir" || printf %s "Could not enter $themesDir" exit 1
   for i in "${themesArray[@]}"; do
-    echo "$i"
+
+############   Debugging   ############
+    if [ $DEBUG == 'YES' ]; then
+      printf "%b\n\nDownloading theme from "
+      printf %s "$i"
+      printf "%b\n\n"
+    fi
+############   Debugging   ############
     exec wget -i --content-disposition "$i"
+
   done
 }
 
@@ -274,16 +558,24 @@ themes() {
 addons() {
   cd "$downloadsDir" || printf %s "Could not enter $downloadsDir" exit 1
   for i in "${addonsArray[@]}"; do
-    echo "$i"
+
+############   Debugging   ############
+      if [ $DEBUG == 'YES' ]; then
+      printf "%b\n\nDownloading addon from "
+      printf %s "$i"
+      printf "%b\n\n"
+    fi
+############   Debugging   ############
     exec wget -i --content-disposition "$i"
+
   done
 }
 
 ######################### MAIN #########################
 
-applications
-#git
-#customApplications
+#applications
+git
+#customGitInstallation
 #backgrounds
 #themes
 #addons
