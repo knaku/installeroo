@@ -469,7 +469,7 @@ fi
 
 # Install applications
 applications() {
-  cd "$setDir" ||
+  cd "$setDir" || printf %s "Could not enter $setDir" exit 1
   for i in "${applicationsArray[@]}"; do
 
 ############   Debugging   ############
