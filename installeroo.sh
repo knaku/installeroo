@@ -470,7 +470,7 @@ fi
 # Install applications
 applications() {
   cd "$setDir" ||
-  for i in "${!applicationsArray[@]}"; do
+  for i in "${applicationsArray[@]}"; do
 
 ############   Debugging   ############
     if [ $DEBUG == 'YES' ]; then
@@ -478,7 +478,7 @@ applications() {
       printf %s "$i"
     fi
 ############   Debugging   ############
-    apt-get install -y "$i"
+    apt-get install --assume-yes $i
 
   done
 }
@@ -567,8 +567,8 @@ addons() {
 
 ######################### MAIN #########################
 
-#applications
-git
+applications
+#git
 #customGitInstallation
 #backgrounds
 #themes
