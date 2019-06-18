@@ -64,7 +64,7 @@ done
 set -- "${POSITIONAL[@]}" # restore positional parameters
 
 ############   Debugging   ############
-if [ $DEBUG == 'YES' ]; then
+if [ "${DEBUG}" == "YES" ]; then
   printf "%b\n\nScript directory is set to "
   printf %s "$scriptDir"
   printf "%b, and options have been processed\n\n"
@@ -75,7 +75,7 @@ fi
 
 if [ "$DIRECTORY" != '' ]; then
 ############   Debugging   ############
-  if [ $DEBUG == 'YES' ]; then
+  if [ "${DEBUG}" == "YES" ]; then
     printf "%b\n\nCustom directory option set\n\n"
   fi
 ############   Debugging   ############
@@ -85,7 +85,7 @@ if [ "$DIRECTORY" != '' ]; then
     if [ ! -d "$DIRECTORY" ]; then
 
 ############   Debugging   ############
-      if [ $DEBUG == 'YES' ]; then
+      if [ "${DEBUG}" == "YES" ]; then
         printf "%b\n\nCustom directory not found, asking for other solutionsn\n"
       fi
 ############   Debugging   ############
@@ -117,7 +117,7 @@ if [ "$DIRECTORY" != '' ]; then
   VAR="true"
 
 ############   Debugging   ############
-  if [ $DEBUG == 'YES' ]; then
+  if [ "${DEBUG}" == "YES" ]; then
     printf "%b\n\nCustom directory option enabled, directory setDir to"
     printf %s "$setDir"
     printf "%b\n\n"
@@ -143,7 +143,7 @@ if [ "$DEFAULT" == "YES" ]; then
   setDir=$scriptDir
 
 ############   Debugging   ############
-  if [ $DEBUG == 'YES' ]; then
+  if [ "${DEBUG}" == "YES" ]; then
     printf "%b\n\nDefault option enabled, directory setDir to"
     printf %s "$setDir"
     printf "%b\n\n"
@@ -156,7 +156,7 @@ if [ "$home" = "YES" ]; then
   setDir=$HOME
 
 ############   Debugging   ############
-  if [ $DEBUG == 'YES' ]; then
+  if [ "${DEBUG}" == "YES" ]; then
     printf "%b\n\nHome folder option enabled, setting directory to"
     printf %s "$setDir"
     printf "%b\n\n"
@@ -169,7 +169,7 @@ if [ "$GIT" = "YES" ]; then
   gitDir=$scriptDir/"git"
 
 ############   Debugging   ############
-  if [ $DEBUG == 'YES' ]; then
+  if [ "${DEBUG}" == "YES" ]; then
     printf "%b\n\nGit in directory option enabled, directory setDir to"
     printf %s "$gitDir"
     printf "%b\n\n"
@@ -182,7 +182,7 @@ if [ "$GIT" = "HOME" ]; then
   gitDir=$HOME/"git"
 
 ############   Debugging   ############
-  if [ $DEBUG == 'YES' ]; then
+  if [ "${DEBUG}" == "YES" ]; then
     printf "%b\n\nGit in home folder option enabled, directory setDir to"
     printf %s "$gitDir"
     printf "%b\n\n"
@@ -204,7 +204,7 @@ themesDir=$dir/"themes"
 
 
 ############   Debugging   ############
-if [ $DEBUG == 'YES' ]; then
+if [ "${DEBUG}" == "YES" ]; then
   printf "%b\n\nDirectories are: \n\t"
   printf %s "$setDir"
   printf "%b\n\t"
@@ -226,7 +226,7 @@ if [ ! -d "$dir" ]; then
   mkdir "$dir"
 
 ############   Debugging   ############
-if [ $DEBUG == 'YES' ]; then
+if [ "${DEBUG}" == "YES" ]; then
     printf "%b\n\nCould not find the main directory, created one at"
     printf %s "$dir"
     printf "%b\n\n"
@@ -239,7 +239,7 @@ if [ ! -d "$gitDir" ]; then
   mkdir "$gitDir"
 
 ############   Debugging   ############
-  if [ $DEBUG == 'YES' ]; then
+  if [ "${DEBUG}" == "YES" ]; then
     printf "%b\n\nCould not find the git directory, created one at"
     printf %s "$gitDir"
     printf "%b\n\n"
@@ -252,7 +252,7 @@ if [ ! -d "$configDir" ]; then
   mkdir "$configDir"
 
 ############   Debugging   ############
-  if [ $DEBUG == 'YES' ]; then
+  if [ "${DEBUG}" == "YES" ]; then
     printf "%b\n\nCould not find the config directory, created one at"
     printf %s "$configDir"
     printf "%b\n\n"
@@ -265,7 +265,7 @@ if [ ! -d "$backgroundDir" ]; then
   mkdir "$backgroundDir"
 
 ############   Debugging   ############
-  if [ $DEBUG == 'YES' ]; then
+  if [ "${DEBUG}" == "YES" ]; then
     printf "%b\n\nCould not find the background directory, created one at"
     printf %s "$backgroundDir"
     printf "%b\n\n"
@@ -278,7 +278,7 @@ if [ ! -d "$themesDir" ]; then
   mkdir "$themesDir"
 
 ############   Debugging   ############
-  if [ $DEBUG == 'YES' ]; then
+  if [ "${DEBUG}" == "YES" ]; then
     printf "%b\n\nCould not find the themes directory, created one at "
     printf %s "$backgroundDir"
     printf "%b\n\n"
@@ -291,7 +291,7 @@ if [ ! -d "$downloadsDir" ]; then
   mkdir "$downloadsDir"
 
 ############   Debugging   ############
-  if [ $DEBUG == 'YES' ]; then
+  if [ "${DEBUG}" == "YES" ]; then
     printf "%b\n\nCould not find the download directory, created one at"
     printf %s "$downloadsDir"
     printf "%b\n\n"
@@ -310,7 +310,7 @@ if [ -f "$configDir/applications.conf" ]; then
   readarray applicationsArray <<< "$applicationsArray"
 
 ############   Debugging   ############
-  if [ $DEBUG == 'YES' ]; then
+  if [ "${DEBUG}" == "YES" ]; then
     printf "%b\nReading applications into Applications Array"
   fi
 ############   Debugging   ############
@@ -319,7 +319,7 @@ else
   touch "$configDir/applications.conf"
 
 ############   Debugging   ############
-  if [ $DEBUG == 'YES' ]; then
+  if [ "${DEBUG}" == "YES" ]; then
     printf "%b\nCould not find an applications config file,
 \\\\\\created a new one at"
     printf %s "$configDir"
@@ -337,7 +337,7 @@ if [ -f "$configDir/gitRepositories.conf" ]; then
   readarray gitReposArray <<< "$gitReposArray"
 
 ############   Debugging   ############
-  if [ $DEBUG == 'YES' ]; then
+  if [ "${DEBUG}" == "YES" ]; then
     printf "%b\nReading git repositories into Git Repository Array"
   fi
   ############   Debugging   ############
@@ -346,7 +346,7 @@ else
   touch "$configDir/gitRepositories.conf"
 
 ############   Debugging   ############
-  if [ $DEBUG == 'YES' ]; then
+  if [ "${DEBUG}" == "YES" ]; then
     printf "%b\nCould not find a git config file, created a new one at "
     printf %s "$configDir"
     printf "%b/themes.conf"
@@ -365,7 +365,7 @@ if [ -f "$configDir/customGitInstallation.conf" ]; then
   readarray customGitInstallationArray <<< "$customGitInstallationArray"
 
 ############   Debugging   ############
-  if [ $DEBUG == 'YES' ]; then
+  if [ "${DEBUG}" == "YES" ]; then
     printf "%b\nReading custom commands into Git Installations Array"
   fi
 ############   Debugging   ############
@@ -374,7 +374,7 @@ else
   touch "$configDir/customGitInstallation.conf"
 
 ############   Debugging   ############
-  if [ $DEBUG == 'YES' ]; then
+  if [ "${DEBUG}" == "YES" ]; then
     printf "%b\nCould not find config config file, created a new one at"
     printf %s "$configDir"
     printf "%b/themes.conf"
@@ -392,7 +392,7 @@ if [ -f "$configDir/background.conf" ]; then
   readarray backgroundsArray <<< "$backgroundsArray"
 
 ############   Debugging   ############
-  if [ $DEBUG == 'YES' ]; then
+  if [ "${DEBUG}" == "YES" ]; then
     printf "%b\nReading backgrounds into Backgrounds Array"
   fi
 ############   Debugging   ############
@@ -401,7 +401,7 @@ else
   touch "$configDir/background.conf"
 
 ############   Debugging   ############
-  if [ $DEBUG == 'YES' ]; then
+  if [ "${DEBUG}" == "YES" ]; then
     printf "%b\nCould not find background config file, created a new one at "
     printf %s "$configDir"
     printf "%b/background.conf"
@@ -419,7 +419,7 @@ if [ -f "$configDir/themes.conf" ]; then
   readarray themesArray <<< "$themesArray"
 
 ############   Debugging   ############
-  if [ $DEBUG == 'YES' ]; then
+  if [ "${DEBUG}" == "YES" ]; then
     printf "%b\nReading themes into Themes Array"
   fi
 ############   Debugging   ############
@@ -428,7 +428,7 @@ else
   touch "$configDir/themes.conf"
 
 ############   Debugging   ############
-  if [ $DEBUG == 'YES' ]; then
+  if [ "${DEBUG}" == "YES" ]; then
     printf "%b\nCould not find config config file, created a new one at "
     printf %s "$configDir"
     printf "%b/themes.conf"
@@ -446,7 +446,7 @@ if [ -f "$configDir/addons.conf" ]; then
   readarray addonsArray <<< "$addonsArray"
 
 ############   Debugging   ############
-  if [ $DEBUG == 'YES' ]; then
+  if [ "${DEBUG}" == "YES" ]; then
     printf "%b\nReading addons into Addons Array\n\n\n"
   fi
 ############   Debugging   ############
@@ -455,7 +455,7 @@ else
   touch "$configDir/addons.conf"
 
 ############   Debugging   ############
-  if [ $DEBUG == 'YES' ]; then
+  if [ "${DEBUG}" == "YES" ]; then
     printf "%b\nCould not find addons config file, created a new one at "
     printf %s "$configDir"
     printf "%b/addons.conf\n\n\n"
@@ -473,7 +473,7 @@ applications() {
   for i in "${applicationsArray[@]}"; do
 
 ############   Debugging   ############
-    if [ $DEBUG == 'YES' ]; then
+    if [ "${DEBUG}" == "YES" ]; then
       printf "%b\nInstalling "
       printf %s "$i"
     fi
@@ -489,7 +489,7 @@ git() {
   for i in "${gitReposArray[@]}"; do
 
 ############   Debugging   ############
-    if [ $DEBUG == 'YES' ]; then
+    if [ "${DEBUG}" == "YES" ]; then
       printf "%b\nCloning git repository "
       printf %s "$i"
     fi
@@ -505,7 +505,7 @@ customGitInstallation() {
   for i in "${customGitInstallationArray[@]}"; do
 
 ############   Debugging   ############
-    if [ $DEBUG == 'YES' ]; then
+    if [ "${DEBUG}" == "YES" ]; then
       printf "%b\nRunning custom command "
       printf %s "$i"
     fi
@@ -521,7 +521,7 @@ backgrounds() {
   for i in "${backgroundsArray[@]}"; do
 
 ############   Debugging   ############
-    if [ $DEBUG == 'YES' ]; then
+    if [ "${DEBUG}" == "YES" ]; then
       printf "%b\nDownloading background from "
       printf %s "$i"
     fi
@@ -539,7 +539,7 @@ themes() {
   for i in "${themesArray[@]}"; do
 
 ############   Debugging   ############
-    if [ $DEBUG == 'YES' ]; then
+    if [ "${DEBUG}" == "YES" ]; then
       printf "%b\nDownloading theme from "
       printf %s "$i"
     fi
@@ -555,7 +555,7 @@ addons() {
   for i in "${addonsArray[@]}"; do
 
 ############   Debugging   ############
-      if [ $DEBUG == 'YES' ]; then
+      if [ "${DEBUG}" == "YES" ]; then
       printf "%b\nDownloading addon from "
       printf %s "$i"
     fi
